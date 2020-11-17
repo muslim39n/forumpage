@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Message;
+use DB;
 
 class MessageController extends Controller
 {
   public function index(){
-    return view('index');
+    $messages = DB::table('messages')->get();
+
+    return view('index', ['messages'=>$messages]);
   }
 
   public function newmessage(){
@@ -19,6 +23,13 @@ class MessageController extends Controller
     $email = $request->input('email');
     $message = $request->input('message');
 
-    return redirect()->route('message.index')->with(['name'=>$name, 'email'=>$email, 'message'=>$message]);
+    $messageObj = new Message;
+    $messageObj->name = $name;
+    $messageObj->email = $email;
+    $messageObj->message = $message;
+
+    $messageObj->save();
+
+    return redirect()->route('message.index');
   }
 }

@@ -14,5 +14,17 @@
         </div>
       @endif
       <a href="{{ route('message.newmessage') }}" class="btn btn-success">New Message</a>
+
+      @foreach($messages as $mes)
+      <div class="card" style="margin-top: 10px;">
+        <div class="card-header">
+          {{ $mes->name }} | {{ $mes->email }}
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{ $mes->message }}</h5>
+          <p class="card-text">Created at: {{ $mes->created_at }}</p>
+        </div>
+      </div>
+      @endforeach
     </div>
   @endsection
